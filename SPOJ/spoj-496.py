@@ -21,5 +21,3 @@ for y in range(x):
     lista.append(wynik)
 for y in lista:
     print(y)
-
-
