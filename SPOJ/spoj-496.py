@@ -22,3 +22,4 @@ for y in range(x):
 for y in lista:
     print(y)
 
+
