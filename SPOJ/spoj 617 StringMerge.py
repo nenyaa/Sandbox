@@ -3,7 +3,7 @@ def string_merge(a, b):
     if len(a) >= len(b):
         for i in range(len(b)):
             line += a[i] + b[i]
-        return ciag
+        return line
     elif len(a) < len(b):
         for i in range(len(a)):
             line += a[i] + b[i]
