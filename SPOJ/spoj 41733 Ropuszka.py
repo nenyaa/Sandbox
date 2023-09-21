@@ -1,5 +1,4 @@
 a, b, n = map(int, input().split())
-
 if n == 33:
     print("WRACAJ")
 else:
