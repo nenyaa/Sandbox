@@ -2,18 +2,6 @@ from django import forms
 from .models import BlogPost
 
 
-class ContactForm(forms.Form):
-    full_name = forms.CharField()
-    email = forms.EmailField()
-    content = forms.CharField(widget=forms.Textarea)
-
-    def clean_email(self, *args, **kwargs):
-        email = self.cleaned_data.get("email")
-        if email.endswith(".edu"):
-            raise forms.ValidationError("This is not valid email.")
-        return email
-
-
 class BlogPostForm(forms.Form):
     title = forms.CharField()
     slug = forms.SlugField()
@@ -23,7 +11,7 @@ class BlogPostForm(forms.Form):
 class BlogPostModelForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'slug', 'content']
+        fields = ['title', 'slug', 'content', 'publish_date']
 
     def clean_title(self, *args, **kwargs):
         instance = self.instance

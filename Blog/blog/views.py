@@ -1,16 +1,13 @@
 # Create your views here.
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
-from django.template.loader import get_template
-from .models import BlogPost
-from .forms import ContactForm, BlogPostModelForm
+from .forms import BlogPostModelForm
 from .models import BlogPost
 
 
 def home_page(request):
     qs = BlogPost.objects.all()[:5]
-    context = {"title": "Welcome to Try Django", "blog_list": qs}
+    context = {"title": "Welcome to my first project Django", "blog_list": qs}
     return render(request, "home.html", context)
 
 
@@ -18,24 +15,11 @@ def about_page(request):
     return render(request, "about.html", {"title": "About us"})
 
 
-def contact_page(request):
-    form = ContactForm(request.POST or None)
-    if form.is_valid():
-        print(form.cleaned_data)
-        form = ContactForm()
-    context = {"title": "Contact us", "form": form}
-    return render(request, "form.html", context)
-
-
-def example_page(request):
-    context = {"title": "Example"}
-    template_name = "hello.html"
-    template_obj = get_template(template_name)
-    return HttpResponse(template_obj.render(context))
-
-
 def blog_post_list_view(request):
-    qs = BlogPost.objects.all()
+    qs = BlogPost.objects.all().published()
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
     template_name = "blog/list.html"
     context = {"object_list": qs}
     return render(request, template_name, context)
