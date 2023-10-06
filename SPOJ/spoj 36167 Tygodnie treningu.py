@@ -1,4 +1,4 @@
-n = int(input())
+n = input()
 days = input().split()
 counter = 0
 for d in days:
