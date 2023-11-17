@@ -7,7 +7,6 @@ from .forms import PostForm
 
 
 def list(request):
-    # posts_list = Post.objects.all()
     posts_list = Post.objects.order_by('-created_at')
     return render(request, 'posts/list.html', {"posts_list": posts_list})
 
@@ -24,11 +23,13 @@ def add(request):
 
 def details(request, id):
     ob = Post.objects.get(pk=id)
+
     return render(request, 'posts/details.html', {"details": ob})
 
 
 def delete(request, id):
     Post.objects.filter(pk=id).delete()
+
     return redirect('posts_list')
 
 
